@@ -1,0 +1,7 @@
+.DS_Store
+# source PNG drawings: kept locally, the site uses the SVGs in drawings/
+sources/
+# third-party reference images
+*.webp
+# local tooling: turns the PNGs in sources/ into drawings/ and jpeg/
+vectorize.sh

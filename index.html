@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Dinosaur Coloring Pages</title>
+<meta name="description" content="Friendly dinosaurs to print and color in: one, two or four per sheet, or download them as SVG or JPEG.">
+<meta property="og:title" content="Free Dinosaur Coloring Pages">
+<meta property="og:description" content="Friendly dinosaurs to print and color in: one, two or four per sheet, or download them as SVG or JPEG.">
+<meta property="og:image" content="https://dinosaurs.claudiopostinghel.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dinosaurs.claudiopostinghel.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Dinosaur Coloring Pages">
+<meta name="twitter:description" content="Friendly dinosaurs to print and color in: one, two or four per sheet, or download them as SVG or JPEG.">
+<meta name="twitter:image" content="https://dinosaurs.claudiopostinghel.com/og-image.png">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<style id="page-rule">@page { size: A4 portrait; margin: 0; }</style>
+<style>
+  :root {
+    --backdrop: #dfe8d2; --band: #eef3e4; --paper: #fff; --ink: #1d1f1a;
+    --leaf: #2f5d34; --leaf-dark: #224628; --cream: #fbf6e6; --muted: #4c5a45; --line: #c9d5bd; --coral: #D9532B; --coral-dark: #B8401C;
+    --round: "Fredoka", "Baloo 2", ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--backdrop); font-family: var(--round); color: var(--ink); }
+  a, button, input { font: inherit; }
+  a:focus-visible, button:focus-visible, input:focus-visible + * { outline: 3px solid #e2b13c; outline-offset: 2px; }
+
+  /* the herd on the left, the print column on the right */
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+  main { padding: 40px 24px 48px; }
+  h1 { margin: 0; font-size: clamp(28px, 4vw, 38px); line-height: 1.1; font-weight: 600; color: var(--leaf-dark); }
+  .lead { margin: 10px 0 0; max-width: 640px; color: var(--muted); font-size: 17px; line-height: 1.5; }
+  .intro { margin-bottom: 24px; }
+  /* the selection presets, in the print column */
+  .toolbar { margin: 0 0 20px; }
+  .toolbar .count { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 4px; }
+  .preset-row { display: flex; flex-direction: column; gap: 4px; }
+  .preset { text-align: left; }
+  .preset select { font: inherit; font-size: 13px; margin: -2px 2px; padding: 0 2px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--ink); }
+  .preset { border: 2px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer;
+    font-size: 14px; padding: 6px 12px; border-radius: 8px; }
+  .preset { transition: background-color .15s, border-color .15s, color .15s, transform .1s; }
+  .preset:hover { border-color: var(--leaf); background: #f4f8ee; }
+  .preset:active { transform: scale(.97); }
+  .preset[aria-pressed="true"] { background: var(--leaf); border-color: var(--leaf); color: var(--cream); }
+  .preset[aria-pressed="true"]:hover { background: var(--leaf-dark); border-color: var(--leaf-dark); }
+  .toolbar .count { color: var(--muted); }
+  .link-btn { border: 0; background: none; padding: 0 2px; margin: 0 -2px; border-radius: 4px; color: var(--leaf-dark); text-decoration: underline;
+    text-underline-offset: 2px; cursor: pointer; font-size: inherit; transition: background-color .15s, color .15s; }
+  .link-btn:hover { background: rgba(47,93,52,.1); }
+  .link-btn:active { background: rgba(47,93,52,.2); }
+  .link-btn.confirm { color: var(--coral-dark); font-weight: 500; }
+  .link-btn.confirm:hover { background: rgba(217,83,43,.12); }
+
+  /* the preview: the real sheets for the chosen layout and paper, every dinosaur in its place;
+     --sw (sheet width in px) is set from script so a dinosaur keeps about the same size in every layout */
+  #cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--sw, 180px), 1fr)); gap: 16px; }
+  .psheet { display: grid; background: var(--paper); border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(34,70,40,.14), 0 3px 10px rgba(34,70,40,.12); }
+  .card { position: relative; min-width: 0; min-height: 0; overflow: hidden; transition: opacity .2s, background-color .15s; }
+  .card:hover { background: #f7faf2; }
+  .cuts .card.r { border-right: 1px dashed #bbb; }
+  .cuts .card.b { border-bottom: 1px dashed #bbb; }
+  .card.off { opacity: .5; }
+  .card.off .pick img, .card.off .pick .name { opacity: .25; }
+  .card.off:hover .pick img, .card.off:hover .pick .name { opacity: .5; }
+  /* the whole page is the pick/unpick toggle; drawing and name sit in it like on the printed sheet */
+  .pick { position: absolute; inset: 0; width: 100%; display: flex; flex-direction: column; padding: 10% 8% 7%;
+    border: 0; background: none; cursor: pointer; color: inherit; }
+  .pick img { flex: 1; min-height: 0; width: 100%; object-fit: contain; display: block; transition: opacity .15s, transform .2s ease-out; }
+  .pick:active img { transform: scale(.97); transition-duration: .08s; }
+  .pick .name { margin-top: 6px; text-align: center; font-size: 12px; letter-spacing: .03em; color: #222; overflow-wrap: anywhere; }
+  .pick .name b { font-weight: 500; }
+  .pick .name[hidden] { display: none; }
+  .pick .printed { position: absolute; top: 6px; right: 6px; padding: 1px 8px; border-radius: 999px;
+    background: #e2b13c; color: var(--ink); font-size: 11px; font-weight: 500; }
+  /* SVG / JPEG / Print over the bottom of the page on hover, on a soft gradient */
+  .tools { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+    padding: 40px 6px 10px; background: linear-gradient(to top, rgba(29,31,26,.55), rgba(29,31,26,0));
+    opacity: 0; transition: opacity .15s; pointer-events: none; }
+  .card:hover .tools, .card:has(:focus-visible) .tools { opacity: 1; pointer-events: auto; }
+  /* a talking button in the middle on hover: says what a click will do */
+  .pick .hint { position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap;
+    padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: #fff;
+    background: var(--leaf); box-shadow: 0 3px 10px rgba(29,31,26,.25); opacity: 0; pointer-events: none;
+    transition: opacity .15s, transform .2s cubic-bezier(.3,1.5,.6,1); transform: translate(-50%, -50%) scale(.85); }
+  .card.off .pick .hint { background: var(--coral); }
+  .card:hover .pick .hint, .pick:focus-visible .hint { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .pick:active .hint { transform: translate(-50%, -50%) scale(.94); }
+  @media (hover: none) { .pick .hint { display: none; } }
+  @media (hover: none) { .tools { opacity: 1; pointer-events: auto; } }
+  .tools a, .tools button { display: inline-flex; align-items: center; gap: 3px; border: 0; background: rgba(255,255,255,.92); color: var(--ink);
+    text-decoration: none; cursor: pointer; font-size: 12px; font-weight: 500; padding: 3px 8px; border-radius: 999px; }
+  .tools a, .tools button { transition: background-color .15s, color .15s, transform .1s; }
+  .tools a:hover, .tools button:hover { background: #fff; color: var(--leaf-dark); transform: translateY(-1px); }
+  .tools a:active, .tools button:active { transform: scale(.94); }
+  .empty { grid-column: 1 / -1; color: var(--muted); padding: 40px 0; }
+
+  /* a dinosaur of the list still without a drawing: same page, a question mark in its place */
+  .card.soon { container-type: inline-size; }
+  .card.soon .pick { cursor: default; }
+  .card.soon .q { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 48cqw; font-weight: 600; line-height: 1; color: #d3dbc9; }
+  .card.soon .name { color: var(--muted); }
+  .card.soon .pick .hint { background: var(--muted); }
+  /* after the first 60: the rest of the top 100, drawings still to come */
+  .divider { grid-column: 1 / -1; margin: 24px 0 4px; }
+  .divider h2 { margin: 0; font-size: 22px; font-weight: 600; color: var(--leaf-dark); }
+  .divider p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+  aside { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow-y: auto; display: flex; flex-direction: column;
+    background: var(--band); border-left: 1px solid var(--line); padding: 24px 20px 120px; }
+  .options-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .options-head h2 { margin: 0; }
+  .done-btn, .options-btn { display: none; }
+  aside h2 { margin: 0 0 10px; font-size: 15px; font-weight: 600; color: var(--leaf-dark); }
+  fieldset { border: 0; margin: 0 0 20px; padding: 0; min-width: 0; }
+  legend { padding: 0; margin-bottom: 8px; font-weight: 600; font-size: 15px; color: var(--leaf-dark); }
+  .sr { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+  .modes { display: grid; gap: 8px; }
+  .mode { display: flex; gap: 12px; align-items: center; cursor: pointer; }
+  .mode > span { flex: 1; display: flex; gap: 12px; align-items: center; padding: 10px 12px;
+    background: var(--paper); border: 2px solid transparent; border-radius: 8px;
+    transition: border-color .15s, box-shadow .15s, transform .1s; }
+  .mode:hover > span { border-color: var(--line); box-shadow: 0 2px 6px rgba(34,70,40,.1); }
+  .mode:active > span { transform: scale(.98); box-shadow: none; }
+  .mode input:checked + span { border-color: var(--leaf); }
+  .mode .glyph i { transition: transform .2s cubic-bezier(.3,1.5,.6,1); }
+  .mode:hover .glyph i { transform: rotate(-4deg); }
+  .mode b { display: block; font-weight: 500; font-size: 15px; }
+  .mode small { color: var(--muted); font-size: 13px; }
+  .glyph { flex: none; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+  .glyph i { display: grid; gap: 2px; padding: 2px; border: 1.5px solid var(--ink); background: #fff; border-radius: 2px; }
+  .glyph i::before, .glyph i::after, .glyph em { content: ""; display: block; background: #9fbf8f; border-radius: 1px; }
+  .glyph.portrait i { width: 23px; height: 32px; }
+  .glyph.landscape i { width: 32px; height: 23px; }
+  .glyph.one i { grid-template-columns: 1fr; }
+  .glyph.one i::after { display: none; }
+  .glyph.two i { grid-template-columns: 1fr 1fr; }
+  .glyph.four i { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .glyph em { display: none; }
+  .glyph.four em { display: block; }
+
+  /* paper: one white block split in two, like the layout cards */
+  .pills { flex: none; display: grid; grid-template-columns: auto auto; gap: 2px; padding: 2px; background: var(--paper); border-radius: 7px; }
+  .pill { cursor: pointer; }
+  .pill > span { display: block; text-align: center; padding: 2px 9px; border-radius: 5px; font-size: 13px; font-weight: 500;
+    transition: background-color .15s, color .15s, transform .1s; }
+  .pill:hover > span { background: var(--band); }
+  .pill:active > span { transform: scale(.94); }
+  .pill input:checked + span { background: var(--leaf); color: var(--cream); }
+
+  .switch { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; cursor: pointer; font-size: 15px; }
+  label.switch, label.check { margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 8px; transition: background-color .15s; }
+  label.switch:hover, .check:hover { background: rgba(47,93,52,.08); }
+  label.switch:active, .check:active { background: rgba(47,93,52,.15); }
+  label.switch:has(input:disabled), .check:has(input:disabled) { background: none; }
+  .switch:active > span::after { width: 22px; }
+  .switch:active input:checked + span::after { transform: translateX(12px); }
+  .switch > span { position: relative; flex: none; width: 40px; height: 24px; border-radius: 999px; background: #b9c5ad; transition: background .15s; }
+  .switch > span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 2px rgba(29,31,26,.25); transition: transform .2s cubic-bezier(.3,1.4,.6,1), width .15s; }
+  .switch input:checked + span { background: var(--leaf); }
+  .switch input:checked + span::after { transform: translateX(16px); }
+  .switch input:disabled + span { opacity: .4; }
+  .switch:has(input:disabled) { color: var(--muted); cursor: default; }
+
+  legend.subhead { margin-bottom: 6px; font-size: 15px; font-weight: 600; color: var(--leaf-dark); }
+  .check { display: flex; gap: 8px; align-items: center; padding: 4px 0; font-size: 14px; cursor: pointer; }
+  .check input { margin: 0; width: 16px; height: 16px; accent-color: var(--leaf); }
+  .check:has(input:disabled) { color: var(--muted); cursor: default; }
+  /* already printed: one switch to skip them, a line below with the history and how to forget it */
+  .skip { margin-top: 10px; }
+  .history { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+  .credits { margin: 10px 0 0; max-width: 640px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+  .credits a { color: var(--leaf-dark); }
+  /* the print button sits at the bottom of the column */
+  /* the print button: fixed at the foot of the print column (on phones, a bar across the bottom) */
+  .go { position: fixed; right: 0; bottom: 0; z-index: 30; width: 320px; display: flex; gap: 8px;
+    padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--band); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .print-btn .label { flex: 1; text-align: left; }
+  .print-btn .summary { text-align: right; font-size: 13px; font-weight: 400; line-height: 1.2; opacity: .92; }
+  .print-btn .summary span { display: block; }
+  .print-btn { width: 100%; display: flex; align-items: center; gap: 8px;
+    border: 2px solid var(--coral-dark); background: var(--coral); color: #fff; font-size: 17px; font-weight: 600;
+    padding: 9px 20px; border-radius: 999px; cursor: pointer; box-shadow: 0 3px 0 var(--coral-dark); }
+  .print-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .print-btn { transition: background-color .15s, transform .08s, box-shadow .08s; }
+  .print-btn svg { transition: transform .2s ease-out; }
+  .print-btn:hover:not(:disabled) svg { transform: translateY(-1px) rotate(-6deg); }
+  .print-btn:hover { background: var(--coral-dark); }
+  .print-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 var(--coral-dark); }
+  .print-btn:disabled { opacity: .5; cursor: default; }
+
+
+  /* the printed sheets: built from the selection, only shown when printing */
+  #sheets { display: none; }
+  .sheet { --pw: 210; --ph: 297; background: var(--paper); display: grid; }
+  .cell { container-type: inline-size; display: flex; flex-direction: column; min-height: 0; padding: 7%; }
+  .cuts .cell.r { border-right: 1px dashed #bbb; }
+  .cuts .cell.b { border-bottom: 1px dashed #bbb; }
+  .cell .drawing { flex: 1; position: relative; min-height: 0; }
+  .cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .cell .label { margin-top: 3cqw; text-align: center; font-size: 4cqw; letter-spacing: .04em; color: #222; }
+  .cell .label b { font-weight: 500; }
+  /* easy-to-read names: what helps young readers with dyslexia is mostly the extra spacing, Lexend adds distinct letter shapes */
+  .easy .cell .label { font-family: "Lexend", Verdana, sans-serif; letter-spacing: .12em; word-spacing: .2em; line-height: 1.5; }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    main { padding: 28px 16px 32px; }
+    #cards { gap: 12px; }
+    main { padding-bottom: 110px; }
+    /* print options become a full-screen sheet, opened from the bottom bar */
+    aside { display: none; position: fixed; inset: 0; z-index: 20; height: auto; border: 0; padding: 20px 20px 110px; }
+    aside.open { display: block; }
+    .done-btn { display: inline-block; border: 0; background: var(--leaf); color: var(--cream); font-weight: 500; font-size: 15px;
+      padding: 6px 16px; border-radius: 999px; cursor: pointer; }
+    .options-head { position: sticky; top: -20px; margin: -20px -20px 12px; padding: 14px 20px; background: var(--band); border-bottom: 1px solid var(--line); z-index: 1; }
+    .go { left: 0; width: auto; border-left: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); }
+    .options-btn { display: block; flex: none; border: 2px solid var(--leaf); background: var(--paper); color: var(--leaf-dark);
+      font-weight: 600; font-size: 15px; padding: 0 16px; border-radius: 999px; cursor: pointer; }
+    .print-btn { flex: 1; min-width: 0; }
+    .done-btn, .options-btn { transition: background-color .15s, color .15s, transform .1s; }
+    .done-btn:hover { background: var(--leaf-dark); }
+    .options-btn:hover { background: #f4f8ee; }
+    .done-btn:active, .options-btn:active { transform: scale(.95); }
+    aside.open { animation: sheet-in .22s ease-out; }
+  }
+  @keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    aside, .go, .intro, .toolbar, #cards { display: none !important; }
+    .layout, main { display: block; padding: 0; }
+    #sheets { display: block; }
+    .sheet { width: calc(var(--pw) * 1mm); height: calc(var(--ph) * 1mm); break-after: page; page-break-after: always; }
+    .sheet:last-child { break-after: auto; page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <main>
+    <div class="intro">
+      <h1>Free Dinosaur Coloring Pages</h1>
+      <p class="lead">A whole herd of friendly dinosaurs, waiting for someone to give them some color.
+      Tap the ones you want, grab your crayons, and don't worry too much about the lines: dinosaurs never did.</p>
+      <p class="credits">Do whatever you like with them. Just don't sell them, or my lawyer, Attorneysaurus Rex,
+      will be on your tracks. 🦖 <a href="https://github.com/claudiopostinghel/dinosaur-coloring-pages">Source on GitHub</a></p>
+    </div>
+    <div id="cards"></div>
+    <div id="sheets"></div>
+  </main>
+  <aside id="options" aria-label="Print options">
+    <div class="options-head"><h2>Print options</h2><button type="button" class="done-btn" id="close-options">Done</button></div>
+    <fieldset>
+      <legend class="sr">Layout</legend>
+      <div class="modes">
+        <label class="mode"><input class="sr" type="radio" name="mode" value="1" checked><span>
+          <span class="glyph portrait one"><i></i></span>
+          <span><b>One big dinosaur</b><small>Portrait · 1 per sheet</small></span></span></label>
+        <label class="mode"><input class="sr" type="radio" name="mode" value="2"><span>
+          <span class="glyph landscape two"><i></i></span>
+          <span><b>Two side by side</b><small>Landscape · 2 per sheet, cut in half</small></span></span></label>
+        <label class="mode"><input class="sr" type="radio" name="mode" value="4"><span>
+          <span class="glyph portrait four"><i><em></em><em></em></i></span>
+          <span><b>Four little ones</b><small>Portrait · 4 per sheet, for on the go</small></span></span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="sr">On the page</legend>
+      <div class="switch" role="radiogroup" aria-label="Paper">Paper
+        <div class="pills">
+          <label class="pill"><input class="sr" type="radio" name="paper" value="a4" checked><span>A4</span></label>
+          <label class="pill"><input class="sr" type="radio" name="paper" value="letter"><span>US Letter</span></label>
+        </div>
+      </div>
+      <label class="switch">Names<input class="sr" type="checkbox" id="names" checked><span></span></label>
+      <label class="switch">Numbers<input class="sr" type="checkbox" id="numbers" checked><span></span></label>
+      <label class="switch">Dashed cutting lines<input class="sr" type="checkbox" id="cuts" checked><span></span></label>
+      <label class="switch">Easier-to-read names<input class="sr" type="checkbox" id="easy"><span></span></label>
+    </fieldset>
+
+    <div class="toolbar">
+      <h2>Which dinosaurs? <span class="count" id="count"></span></h2>
+      <div class="preset-row" id="presets"></div>
+      <label class="switch skip">Skip the ones I've printed<input class="sr" type="checkbox" id="skip" checked><span></span></label>
+      <p class="history" id="history"></p>
+    </div>
+  </aside>
+</div>
+<div class="go">
+      <button type="button" class="options-btn" id="open-options" aria-controls="options">Print options</button>
+      <button type="button" class="print-btn" id="print"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/><path d="M17.5 12h.01"/></svg><span class="label">Print</span><span class="summary" id="summary"></span></button>
+</div>
+<script src="dinos.js"></script>
+<script>
+// per layout: orientation and grid; the paper sets the size in mm
+const MODES = {
+  1: { orient: "portrait", cols: 1, rows: 1 },
+  2: { orient: "landscape", cols: 2, rows: 1 },
+  4: { orient: "portrait", cols: 2, rows: 2 },
+};
+const PAPERS = { a4: { w: 210, h: 297, css: "A4" }, letter: { w: 215.9, h: 279.4, css: "letter" } };
+
+const $ = id => document.getElementById(id);
+const value = name => document.querySelector(`input[name="${name}"]:checked`).value;
+let herd = [];           // every dinosaur whose drawing loads, in order
+const LATER = 60;         // the preview puts a "Coming later" heading after this number
+let shown = [];          // the preview: herd plus the ones still to draw, each in its place in the list
+const picked = new Set(); // slugs selected for printing
+let onSheets = [];
+let preset = { kind: "all" }; // all | top (with n) | hand: which "Which dinosaurs?" entry is on
+const cardEls = {};      // slug -> its card in the preview, built once and moved between sheets       // true after "By hand" or a tap on a dinosaur, until a preset is chosen        // what the sheets currently hold (what a print would print)
+
+// what has been printed in this browser: { slug: "YYYY-MM-DD" }. Keyed by slug, never by
+// position, so adding or reordering dinosaurs in dinos.js keeps the history right;
+// slugs that no longer exist are just ignored.
+const STORE = "dinos-printed";
+function loadPrinted() {
+  try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch { return {}; }
+}
+function savePrinted(slugs) {
+  const printed = loadPrinted(), today = new Date().toISOString().slice(0, 10);
+  slugs.forEach(slug => printed[slug] = today);
+  try { localStorage.setItem(STORE, JSON.stringify(printed)); } catch {}
+}
+
+// the font is only used on the printed sheets, so the browser fetches it on demand: wait for it before printing
+const fontReady = () => document.fonts.load('500 16px "Lexend"').catch(() => {});
+const printWhenReady = () => ($("easy").checked ? fontReady() : Promise.resolve()).then(() => window.print());
+
+function buildSheets(list) {
+  const mode = MODES[value("mode")];
+  const paper = PAPERS[value("paper")];
+  const [pw, ph] = mode.orient === "portrait" ? [paper.w, paper.h] : [paper.h, paper.w];
+  const perSheet = mode.cols * mode.rows;
+  const names = $("names").checked, numbers = $("numbers").checked;
+  const cuts = $("cuts").checked && perSheet > 1;
+  const easy = $("easy").checked && (names || numbers);
+  if (easy) fontReady();
+  $("page-rule").textContent = `@page { size: ${paper.css} ${mode.orient}; margin: 0; }`;
+
+  const sheets = [];
+  for (let i = 0; i < list.length; i += perSheet) {
+    const sheet = document.createElement("section");
+    sheet.className = "sheet" + (cuts ? " cuts" : "") + (easy ? " easy" : "");
+    sheet.style.cssText = `--pw:${pw};--ph:${ph};grid-template-columns:repeat(${mode.cols},1fr);grid-template-rows:repeat(${mode.rows},1fr)`;
+    for (let k = 0; k < perSheet; k++) {
+      const d = list[i + k];
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      if (k % mode.cols < mode.cols - 1) cell.classList.add("r");
+      if (Math.floor(k / mode.cols) < mode.rows - 1) cell.classList.add("b");
+      if (d) {
+        const label = [numbers ? `${d.num}.` : "", names ? `<b>${d.name}</b>` : ""].filter(Boolean).join(" ");
+        cell.innerHTML = `<div class="drawing"><img src="drawings/${d.slug}.svg" alt="${d.name}"></div>` +
+          (label ? `<div class="label">${label}</div>` : "");
+      }
+      sheet.appendChild(cell);
+    }
+    sheets.push(sheet);
+  }
+  $("sheets").replaceChildren(...sheets);
+  onSheets = list;
+  return sheets.length;
+}
+
+function render() {
+  const perSheet = MODES[value("mode")].cols * MODES[value("mode")].rows;
+  $("cuts").disabled = perSheet === 1;
+  $("easy").disabled = !$("names").checked && !$("numbers").checked;
+  const printed = loadPrinted();
+  let nPrinted = 0;
+  herd.forEach(d => {
+    const card = cardEls[d.slug];
+    const pick = card.querySelector(".pick");
+    const on = picked.has(d.slug);
+    pick.setAttribute("aria-pressed", on);
+    card.classList.toggle("off", !on);
+    pick.querySelector(".hint").textContent = on ? "✕ Leave out of print" : "+ Add to print";
+    pick.ariaLabel = on ? `${d.name}: will be printed (tap to leave it out)` : `${d.name}: left out (tap to add it)`;
+    const done = d.slug in printed;
+    nPrinted += done;
+    const badge = pick.querySelector(".printed");
+    badge.hidden = !done;
+    badge.title = done ? `Printed on ${printed[d.slug]}` : "";
+  });
+  $("skip").disabled = !nPrinted;
+  renderHistory(nPrinted);
+  renderPresets();
+  renderPreview();
+
+  const chosen = herd.filter(d => picked.has(d.slug));
+  const s = buildSheets(chosen), n = chosen.length;
+  $("count").textContent = `${n} of ${herd.length} picked`;
+  $("summary").innerHTML = n
+    ? `<span>${n} ${n === 1 ? "dinosaur" : "dinosaurs"}</span><span>${s} ${s === 1 ? "page" : "pages"}</span>`
+    : "<span>pick a dinosaur first</span>";
+  $("print").disabled = !n;
+}
+
+// the preview on the left: every dinosaur on the sheets of the chosen layout and paper,
+// the ones left out stay in place but faded, the ones still to draw show a question mark
+// (the printed sheets close those gaps)
+function renderPreview() {
+  const mode = MODES[value("mode")], paper = PAPERS[value("paper")];
+  const [pw, ph] = mode.orient === "portrait" ? [paper.w, paper.h] : [paper.h, paper.w];
+  const perSheet = mode.cols * mode.rows;
+  const cuts = $("cuts").checked && perSheet > 1;
+  const names = $("names").checked, numbers = $("numbers").checked;
+  const cellPx = innerWidth <= 800 ? 130 : 175;          // minimum on-screen width of one dinosaur; the grid stretches to fill the row
+  const sw = cellPx * mode.cols;
+  $("cards").style.setProperty("--sw", `${sw}px`);
+  const sheets = [];
+  for (let i = 0; i < shown.length; i += perSheet) {
+    if (shown[i].num === LATER + 1) {   // 60 is a multiple of 1, 2 and 4, so it always starts a sheet
+      const divider = document.createElement("div");
+      divider.className = "divider";
+      divider.innerHTML = `<h2>Coming later</h2><p>From ${LATER + 1} to 100: the drawings are on their way.</p>`;
+      sheets.push(divider);
+    }
+    const sheet = document.createElement("div");
+    sheet.className = "psheet" + (cuts ? " cuts" : "");
+    sheet.style.cssText = `aspect-ratio:${pw}/${ph};grid-template-columns:repeat(${mode.cols},1fr);grid-template-rows:repeat(${mode.rows},1fr)`;
+    shown.slice(i, i + perSheet).forEach((d, k) => {
+      const card = cardEls[d.slug];
+      card.classList.toggle("r", k % mode.cols < mode.cols - 1);
+      card.classList.toggle("b", Math.floor(k / mode.cols) < mode.rows - 1);
+      const label = [numbers ? `${d.num}.` : "", names ? `<b>${d.name}</b>` : ""].filter(Boolean).join(" ");
+      const name = card.querySelector(".name");
+      name.innerHTML = label;
+      name.hidden = !label;
+      sheet.appendChild(card);
+    });
+    sheets.push(sheet);
+  }
+  $("cards").replaceChildren(...sheets);
+}
+addEventListener("resize", () => herd.length && renderPreview());
+
+// selection presets, shown as a list. "Most famous" follows the order of DINOS in dinos.js;
+// the Top N entry has a dropdown with the multiples of 10 below the number available.
+// "Skip the ones I've already printed" takes the printed ones out of every preset.
+let topN = 10;
+const pool = () => { const printed = loadPrinted(); return $("skip").checked ? herd.filter(d => !(d.slug in printed)) : herd; };
+const tens = count => Array.from({ length: Math.ceil(count / 10) - 1 }, (_, i) => (i + 1) * 10);
+function applyPreset(p) {
+  preset = p;
+  const list = p.kind === "all" ? pool() : p.kind === "top" ? pool().slice(0, p.n) : [];
+  picked.clear();
+  list.forEach(d => picked.add(d.slug));
+  render();
+}
+function renderPresets() {
+  const ns = tens(pool().length);
+  if (!ns.includes(topN)) topN = ns[0];
+  const make = (kind, html) => {
+    const el = document.createElement(kind === "top" ? "div" : "button");
+    el.className = "preset";
+    el.setAttribute("aria-pressed", preset.kind === kind);
+    el.innerHTML = html;
+    return el;
+  };
+  const els = [];
+  const all = make("all", "All");
+  all.type = "button";
+  all.onclick = () => applyPreset({ kind: "all" });
+  els.push(all);
+  if (ns.length) {
+    const top = make("top", `Top <select aria-label="How many">${ns.map(n => `<option${n === topN ? " selected" : ""}>${n}</option>`).join("")}</select> most famous`);
+    top.setAttribute("role", "button");
+    top.tabIndex = 0;
+    const sel = top.querySelector("select");
+    const go = () => { topN = +sel.value; applyPreset({ kind: "top", n: topN }); };
+    sel.onchange = e => { e.stopPropagation(); go(); };
+    sel.onclick = e => e.stopPropagation();
+    top.onclick = go;
+    top.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } };
+    els.push(top);
+  }
+  const hand = make("hand", "I'll pick them myself");
+  hand.type = "button";
+  hand.title = "Start from none, then tap the dinosaurs you want";
+  hand.onclick = () => applyPreset({ kind: "hand" });
+  els.push(hand);
+  $("presets").replaceChildren(...els);
+}
+
+// under the Skip switch: how many are remembered, and a Forget that asks once more before clearing
+let forgetAsked = 0;
+function renderHistory(n) {
+  if (!n) { forgetAsked = 0; $("history").textContent = "Nothing printed yet. This browser will remember what you print."; return; }
+  $("history").innerHTML = forgetAsked
+    ? `Forget all ${n}? <button type="button" class="link-btn confirm" data-forget="yes">Yes, forget</button> · <button type="button" class="link-btn" data-forget="no">Keep</button>`
+    : `${n} printed so far, remembered in this browser. <button type="button" class="link-btn" data-forget="ask">Forget them</button>`;
+}
+$("history").onclick = e => {
+  const what = e.target.closest("[data-forget]")?.dataset.forget;
+  if (!what) return;
+  clearTimeout(forgetAsked);
+  forgetAsked = what === "ask" ? setTimeout(() => { forgetAsked = 0; render(); }, 5000) : 0;
+  if (what === "yes") {
+    try { localStorage.removeItem(STORE); } catch {}
+    if (preset.kind !== "hand") return applyPreset(preset);
+  }
+  render();
+};
+
+// phones: print options open as a full-screen sheet
+const options = $("options");
+const showOptions = open => { options.classList.toggle("open", open); document.body.style.overflow = open ? "hidden" : ""; };
+$("open-options").onclick = () => showOptions(!options.classList.contains("open"));
+$("close-options").onclick = () => showOptions(false);
+
+const DOWN = `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>`;
+
+// ?only=<slug> starts with just that dinosaur picked
+const only = new URLSearchParams(location.search).get("only");
+loadDinos().then(({ ready: dinos, soon }) => {
+  herd = dinos;
+  soon.forEach(d => {
+    const card = document.createElement("article");
+    card.className = "card soon";
+    card.innerHTML = `<div class="pick"><span class="q" aria-hidden="true">?</span>
+        <span class="name">${d.num}. <b>${d.name}</b></span><span class="hint">Coming soon</span></div>`;
+    cardEls[d.slug] = card;
+  });
+  shown = [...dinos, ...soon].sort((a, b) => a.num - b.num);
+  dinos.forEach(d => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.id = `card-${d.slug}`;
+    card.innerHTML = `<button type="button" class="pick" aria-pressed="true">
+        <img src="drawings/${d.slug}.svg" alt="${d.name}" loading="lazy">
+        <span class="name">${d.num}. <b>${d.name}</b></span>
+        <span class="printed" hidden>printed</span><span class="hint"></span></button>
+      <div class="tools">
+        <a href="drawings/${d.slug}.svg" download="${d.slug}.svg" title="Download ${d.name} as SVG">${DOWN} SVG</a>
+        <a href="jpeg/${d.slug}.jpg" download="${d.slug}.jpg" title="Download ${d.name} as JPEG">${DOWN} JPEG</a>
+        <button type="button" data-print title="Print just ${d.name}">Print</button>
+      </div>`;
+    card.querySelector(".pick").onclick = () => {
+      picked.has(d.slug) ? picked.delete(d.slug) : picked.add(d.slug);
+      preset = { kind: "hand" };
+      render();
+    };
+    card.querySelector("[data-print]").onclick = () => {
+      buildSheets([d]);
+      printWhenReady();
+    };
+    cardEls[d.slug] = card;
+  });
+  if (dinos.some(d => d.slug === only)) { preset = { kind: "hand" }; picked.add(only); render(); }
+  else applyPreset({ kind: "all" });
+});
+
+
+
+document.querySelector("aside").addEventListener("change", render);
+$("print").onclick = printWhenReady;
+// turning Skip on or off re-runs the chosen preset; a hand-made pick only loses the printed ones
+$("skip").onchange = e => {
+  e.stopPropagation();
+  if (preset.kind !== "hand") return applyPreset(preset);
+  if ($("skip").checked) { const printed = loadPrinted(); [...picked].forEach(slug => slug in printed && picked.delete(slug)); }
+  render();
+};
+// also covers Cmd/Ctrl+P; the print dialog can't tell us if it was canceled
+addEventListener("beforeprint", () => {
+  savePrinted(onSheets.map(d => d.slug));
+});
+// back to the selection after a single-dinosaur print, and show the new "printed" marks
+addEventListener("afterprint", render);
+</script>
+</body>
+</html>

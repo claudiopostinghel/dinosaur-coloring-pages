@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><clipPath id="tile"><rect width="64" height="64" rx="14"/></clipPath></defs>
+  <rect width="64" height="64" rx="14" fill="#2f5d34"/>
+  <g clip-path="url(#tile)" stroke="#1d1f1a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16.5 30L13.5 19.5L24.5 22Z" fill="#D9532B"/>
+    <path d="M11.8 45L4.5 39L13.2 34.5Z" fill="#D9532B"/>
+    <path d="M11.2 59L4 53.5L11.6 48.5Z" fill="#D9532B"/>
+    <path d="M11 66C10 50 12 33 21 24C28 16 41 12 50 15C57 17.5 61.5 24.5 60.5 32C59.5 40 53.5 44.5 45 45.5C40 46 36 48.5 34.5 54L34 66Z" fill="#fbf6e6"/>
+    <circle cx="20" cy="36" r="2.6" fill="#9cc28f" stroke="none"/>
+    <circle cx="17" cy="45" r="2" fill="#9cc28f" stroke="none"/>
+    <circle cx="25" cy="29" r="1.8" fill="#9cc28f" stroke="none"/>
+    <circle cx="36.5" cy="37" r="3.2" fill="#D9532B" fill-opacity=".45" stroke="none"/>
+    <path d="M40 35.5Q49 41.5 57.5 34" fill="none"/>
+    <circle cx="40" cy="25.5" r="4.4" fill="#1d1f1a" stroke="none"/>
+    <circle cx="41.5" cy="24" r="1.5" fill="#fff" stroke="none"/>
+    <ellipse cx="55" cy="23.5" rx="1.2" ry="1.5" fill="#1d1f1a" stroke="none"/>
+  </g>
+</svg>
