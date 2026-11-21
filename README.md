@@ -59,54 +59,54 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 10. Brachiosaurus
 11. Dilophosaurus
 12. Therizinosaurus
-13. Deinonychus (coming soon)
+13. Deinonychus
 14. Carnotaurus
 15. Parasaurolophus
 16. Argentinosaurus
-17. Utahraptor (coming soon)
+17. Utahraptor
 18. Brontosaurus
 19. Diplodocus
 20. Pachycephalosaurus
-21. Nigersaurus (coming soon)
+21. Nigersaurus
 22. Iguanodon
-23. Nanotyrannus (coming soon)
-24. Apatosaurus (coming soon)
-25. Titanosaurus (coming soon)
-26. Megalosaurus (coming soon)
-27. Yutyrannus (coming soon)
-28. Carcharodontosaurus (coming soon)
-29. Achelousaurus (coming soon)
+23. Nanotyrannus
+24. Apatosaurus
+25. Titanosaurus
+26. Megalosaurus
+27. Yutyrannus
+28. Carcharodontosaurus
+29. Achelousaurus
 30. Baryonyx
 31. Compsognathus
-32. Borealopelta (coming soon)
-33. Ceratosaurus (coming soon)
-34. Patagotitan (coming soon)
-35. Herrerasaurus (coming soon)
-36. Edmontosaurus (coming soon)
-37. Microraptor (coming soon)
-38. Troodon (coming soon)
-39. Acrocanthosaurus (coming soon)
-40. Suchomimus (coming soon)
-41. Tarbosaurus (coming soon)
-42. Coelophysis (coming soon)
-43. Deinocheirus (coming soon)
-44. Albertosaurus (coming soon)
-45. Styracosaurus (coming soon)
-46. Aquilops (coming soon)
-47. Bruhathkayosaurus (coming soon)
-48. Dreadnoughtus (coming soon)
-49. Irritator (coming soon)
-50. Protoceratops (coming soon)
-51. Psittacosaurus (coming soon)
-52. Maip (coming soon)
-53. Gorgosaurus (coming soon)
-54. Maiasaura (coming soon)
-55. Massospondylus (coming soon)
+32. Borealopelta
+33. Ceratosaurus
+34. Patagotitan
+35. Herrerasaurus
+36. Edmontosaurus
+37. Microraptor
+38. Troodon
+39. Acrocanthosaurus
+40. Suchomimus
+41. Tarbosaurus
+42. Coelophysis
+43. Deinocheirus
+44. Albertosaurus
+45. Styracosaurus
+46. Aquilops
+47. Bruhathkayosaurus
+48. Dreadnoughtus
+49. Irritator
+50. Protoceratops
+51. Psittacosaurus
+52. Maip
+53. Gorgosaurus
+54. Maiasaura
+55. Massospondylus
 56. Gallimimus
-57. Camarasaurus (coming soon)
-58. Mamenchisaurus (coming soon)
+57. Camarasaurus
+58. Mamenchisaurus
 59. Oviraptor
-60. Majungasaurus (coming soon)
+60. Majungasaurus
 61. Sinosauropteryx (coming soon)
 62. Daspletosaurus (coming soon)
 63. Sauroposeidon (coming soon)
