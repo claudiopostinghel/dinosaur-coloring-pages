@@ -130,13 +130,13 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 81. Hadrosaurus
 82. Dryptosaurus
 83. Megaraptor
-84. Australovenator (coming soon)
-85. Eoraptor (coming soon)
-86. Kentrosaurus (coming soon)
-87. Torosaurus (coming soon)
-88. Ornithomimus (coming soon)
-89. Austroraptor (coming soon)
-90. Achillobator (coming soon)
+84. Australovenator
+85. Eoraptor
+86. Kentrosaurus
+87. Torosaurus
+88. Ornithomimus
+89. Austroraptor
+90. Achillobator
 91. Liliensternus (coming soon)
 92. Dromaeosaurus (coming soon)
 93. Struthiomimus (coming soon)
