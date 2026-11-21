@@ -112,10 +112,6 @@
     font-size: 48cqw; font-weight: 600; line-height: 1; color: #d3dbc9; }
   .card.soon .name { color: var(--muted); }
   .card.soon .pick .hint { background: var(--muted); }
-  /* above the dinosaurs of the top 100 that are still to draw */
-  .divider { grid-column: 1 / -1; margin: 24px 0 4px; }
-  .divider h2 { margin: 0; font-size: 22px; font-weight: 600; color: var(--leaf-dark); }
-  .divider p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
 
   aside { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow-y: auto; display: flex; flex-direction: column;
     background: var(--band); border-left: 1px solid var(--line); padding: 24px 20px 120px; }
@@ -321,7 +317,6 @@ const PAPERS = { a4: { w: 210, h: 297, css: "A4" }, letter: { w: 215.9, h: 279.4
 const $ = id => document.getElementById(id);
 const value = name => document.querySelector(`input[name="${name}"]:checked`).value;
 let herd = [];           // every dinosaur whose drawing loads, in order
-let later = null;        // [first, last] numbers of the dinosaurs still to draw: the preview puts a "Coming later" heading above them
 let shown = [];          // the preview: herd plus the ones still to draw, each in its place in the list
 const picked = new Set(); // slugs selected for printing
 let onSheets = [];
@@ -428,15 +423,7 @@ function renderPreview() {
   const sw = cellPx * mode.cols;
   $("cards").style.setProperty("--sw", `${sw}px`);
   const sheets = [];
-  let headed = false;
   for (let i = 0; i < shown.length; i += perSheet) {
-    if (later && !headed && cardEls[shown[i].slug].classList.contains("soon")) {   // the first sheet that starts with a dinosaur still to draw
-      headed = true;
-      const divider = document.createElement("div");
-      divider.className = "divider";
-      divider.innerHTML = `<h2>Coming later</h2><p>From ${later[0]} to ${later[1]}: the drawings are on their way.</p>`;
-      sheets.push(divider);
-    }
     const sheet = document.createElement("div");
     sheet.className = "psheet" + (cuts ? " cuts" : "");
     sheet.style.cssText = `aspect-ratio:${pw}/${ph};grid-template-columns:repeat(${mode.cols},1fr);grid-template-rows:repeat(${mode.rows},1fr)`;
@@ -536,7 +523,6 @@ const DOWN = `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke
 const only = new URLSearchParams(location.search).get("only");
 loadDinos().then(({ ready: dinos, soon }) => {
   herd = dinos;
-  later = soon.length ? [soon[0].num, soon[soon.length - 1].num] : null;
   soon.forEach(d => {
     const card = document.createElement("article");
     card.className = "card soon";

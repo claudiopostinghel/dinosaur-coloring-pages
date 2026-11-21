@@ -1,0 +1,3 @@
+# missing drawings fall back to index.html (200, text/html): never let a browser keep that, or a new drawing stays hidden behind it for hours
+/drawings/*
+  Cache-Control: no-cache
