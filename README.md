@@ -117,16 +117,16 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 68. Anchiornis
 69. Amargasaurus
 70. Pyroraptor
-71. Nanuqsaurus (coming soon)
-72. Concavenator (coming soon)
-73. Saurolophus (coming soon)
-74. Yi (coming soon)
-75. Rajasaurus (coming soon)
-76. Tyrannotitan (coming soon)
-77. Saurophaganax (coming soon)
-78. Pachyrhinosaurus (coming soon)
-79. Giraffatitan (coming soon)
-80. Mapusaurus (coming soon)
+71. Nanuqsaurus
+72. Concavenator
+73. Saurolophus
+74. Yi
+75. Rajasaurus
+76. Tyrannotitan
+77. Saurophaganax
+78. Pachyrhinosaurus
+79. Giraffatitan
+80. Mapusaurus
 81. Hadrosaurus (coming soon)
 82. Dryptosaurus (coming soon)
 83. Megaraptor (coming soon)
