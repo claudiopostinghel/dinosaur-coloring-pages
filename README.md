@@ -107,16 +107,16 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 58. Mamenchisaurus
 59. Oviraptor
 60. Majungasaurus
-61. Sinosauropteryx (coming soon)
-62. Daspletosaurus (coming soon)
-63. Sauroposeidon (coming soon)
-64. Cryolophosaurus (coming soon)
-65. Plateosaurus (coming soon)
-66. Alamosaurus (coming soon)
-67. Torvosaurus (coming soon)
-68. Anchiornis (coming soon)
-69. Amargasaurus (coming soon)
-70. Pyroraptor (coming soon)
+61. Sinosauropteryx
+62. Daspletosaurus
+63. Sauroposeidon
+64. Cryolophosaurus
+65. Plateosaurus
+66. Alamosaurus
+67. Torvosaurus
+68. Anchiornis
+69. Amargasaurus
+70. Pyroraptor
 71. Nanuqsaurus (coming soon)
 72. Concavenator (coming soon)
 73. Saurolophus (coming soon)
