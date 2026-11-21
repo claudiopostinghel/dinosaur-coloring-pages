@@ -108,13 +108,17 @@ const DINOS = [
 
 // resolves with { ready, soon }: ready are the dinosaurs whose drawing actually loads, soon the others,
 // each as { slug, name, num } where num is its place in the list above (so the numbers stay put as drawings arrive)
+// The check asks the server every time (cache "no-cache"): a drawing that is not there yet comes back as the
+// HTML page, and the domain tells browsers to keep answers for 4 hours, so a plain image load would go on
+// showing a new drawing as missing long after it is published. The fresh answer also replaces the cached one
+// that the <img> tags use afterwards.
 function loadDinos() {
-  return Promise.all(DINOS.map(([slug, name], i) => new Promise(done => {
-    const img = new Image();
-    img.onload = () => done({ slug, name, num: i + 1, ok: true });
-    img.onerror = () => done({ slug, name, num: i + 1, ok: false });
-    img.src = `drawings/${slug}.svg`;
-  }))).then(list => ({
+  return Promise.all(DINOS.map(([slug, name], i) =>
+    fetch(`drawings/${slug}.svg`, { cache: "no-cache" })
+      .then(r => r.ok && (r.headers.get("content-type") || "").includes("svg"))
+      .catch(() => false)
+      .then(ok => ({ slug, name, num: i + 1, ok }))
+  )).then(list => ({
     ready: list.filter(d => d.ok).map(({ ok, ...d }) => d),
     soon: list.filter(d => !d.ok).map(({ ok, ...d }) => d),
   }));

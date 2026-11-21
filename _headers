@@ -1,3 +1,4 @@
-# missing drawings fall back to index.html (200, text/html): never let a browser keep that, or a new drawing stays hidden behind it for hours
+# a drawing that does not exist yet falls back to index.html (200, text/html): browsers must not keep that.
+# On dinosaurs.claudiopostinghel.com the zone rewrites this to a 4-hour browser cache, so dinos.js also asks with cache "no-cache".
 /drawings/*
   Cache-Control: no-cache
