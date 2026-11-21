@@ -102,8 +102,6 @@ const DINOS = [
   ["nyasasaurus", "Nyasasaurus"],
   ["procompsognathus", "Procompsognathus"],
   ["hypsilophodon", "Hypsilophodon"],
-  // not a dinosaur (a flying reptile), but already drawn: kept after the top 100
-  ["pteranodon", "Pteranodon"],
 ];
 
 // resolves with { ready, soon }: ready are the dinosaurs whose drawing actually loads, soon the others,
