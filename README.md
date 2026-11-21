@@ -137,16 +137,16 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 88. Ornithomimus
 89. Austroraptor
 90. Achillobator
-91. Liliensternus (coming soon)
-92. Dromaeosaurus (coming soon)
-93. Struthiomimus (coming soon)
-94. Dakotaraptor (coming soon)
-95. Supersaurus (coming soon)
-96. Guanlong (coming soon)
-97. Muttaburrasaurus (coming soon)
-98. Nyasasaurus (coming soon)
-99. Procompsognathus (coming soon)
-100. Hypsilophodon (coming soon)
+91. Liliensternus
+92. Dromaeosaurus
+93. Struthiomimus
+94. Dakotaraptor
+95. Supersaurus
+96. Guanlong
+97. Muttaburrasaurus
+98. Nyasasaurus
+99. Procompsognathus
+100. Hypsilophodon
 
 ### License
 
