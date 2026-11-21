@@ -127,9 +127,9 @@ The list is ranked by how often each dinosaur's Wikipedia page was read over the
 78. Pachyrhinosaurus
 79. Giraffatitan
 80. Mapusaurus
-81. Hadrosaurus (coming soon)
-82. Dryptosaurus (coming soon)
-83. Megaraptor (coming soon)
+81. Hadrosaurus
+82. Dryptosaurus
+83. Megaraptor
 84. Australovenator (coming soon)
 85. Eoraptor (coming soon)
 86. Kentrosaurus (coming soon)
